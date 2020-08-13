@@ -8,7 +8,6 @@ Our overarching goals are clarity, consistency and brevity, in that order.
 ## Table of Contents
 
 * [Correctness](#correctness)
-* [Using SwiftLint](#using-swiftlint)
 * [Naming](#naming)
   * [Prose](#prose)
   * [Delegates](#delegates)
