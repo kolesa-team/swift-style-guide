@@ -50,19 +50,12 @@ Our overarching goals are clarity, consistency and brevity, in that order.
 * [Multi-line String Literals](#multi-line-string-literals)
 * [No Emoji](#no-emoji)
 * [No #imageLiteral or #colorLiteral](#no-imageliteral-or-colorliteral)
-* [Organization and Bundle Identifier](#organization-and-bundle-identifier)
-* [Copyright Statement](#copyright-statement)
-* [Smiley Face](#smiley-face)
 * [References](#references)
 
 
 ## Correctness
 
 Strive to make your code compile without warnings. This rule informs many style decisions such as using `#selector` types instead of string literals.
-
-## Using SwiftLint
-
-When writing for raywenderlich.com, you are strongly encouraged — and some teams may require — to use our SwiftLint configuration. See the [SwiftLint Policy](SWIFTLINT.markdown) for more information.
 
 ## Naming
 
@@ -233,7 +226,7 @@ Aspirational methods not directly associated with the tutorial whose implementat
 **Preferred**:
 ```swift
 override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-  return Database.contacts.count
+  Database.contacts.count
 }
 ```
 
@@ -246,12 +239,12 @@ override func didReceiveMemoryWarning() {
 
 override func numberOfSections(in tableView: UITableView) -> Int {
   // #warning Incomplete implementation, return the number of sections
-  return 1
+  1
 }
 
 override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
   // #warning Incomplete implementation, return the number of rows
-  return Database.contacts.count
+  Database.contacts.count
 }
 
 ```
@@ -288,7 +281,7 @@ var deviceModels: [String]
 
 ## Spacing
 
-* Indent using 2 spaces rather than tabs to conserve space and help prevent line wrapping. Be sure to set this preference in Xcode and in the Project settings as shown below:
+* Indent using 4 spaces rather than tabs to conserve space and help prevent line wrapping. Be sure to set this preference in Xcode and in the Project settings as shown below:
 
 ![Xcode indent settings](screens/indentation.png)
 
@@ -351,7 +344,7 @@ Avoid the use of C-style comments (`/* ... */`). Prefer the use of double- or tr
 
 ## Classes and Structures
 
-### Which one to use?
+### Which one to use? (need to revise)
 
 Remember, structs have [value semantics](https://developer.apple.com/library/mac/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-XID_144). Use structs for things that do not have an identity. An array that contains [a, b, c] is really the same as another array that contains [a, b, c] and they are completely interchangeable. It doesn't matter whether you use the first array or the second, because they represent the exact same thing. That's why arrays are structs.
 
@@ -369,7 +362,7 @@ class Circle: Shape {
   var radius: Double
   var diameter: Double {
     get {
-      return radius * 2
+      radius * 2
     }
     set {
       radius = newValue / 2
@@ -387,16 +380,17 @@ class Circle: Shape {
   }
 
   override func area() -> Double {
-    return Double.pi * radius * radius
+    Double.pi * radius * radius
   }
 }
 
 extension Circle: CustomStringConvertible {
   var description: String {
-    return "center = \(centerString) area = \(area())"
+    "center = \(centerString) area = \(area())"
   }
+  
   private var centerString: String {
-    return "(\(x),\(y))"
+    "(\(x),\(y))"
   }
 }
 ```
@@ -424,7 +418,7 @@ For conciseness, if a computed property is read-only, omit the get clause. The g
 **Preferred**:
 ```swift
 var diameter: Double {
-  return radius * 2
+  radius * 2
 }
 ```
 
@@ -432,12 +426,12 @@ var diameter: Double {
 ```swift
 var diameter: Double {
   get {
-    return radius * 2
+    radius * 2
   }
 }
 ```
 
-### Final
+### Final (need to revise)
 
 Marking classes or members as `final` in tutorials can distract from the main topic and is not required. Nevertheless, use of `final` can sometimes clarify your intent and is worth the cost. In the below example, `Box` has a particular purpose and customization in a derived class is not intended. Marking it `final` makes that clear.
 
@@ -451,7 +445,7 @@ final class Box<T> {
 }
 ```
 
-## Function Declarations
+## Function Declarations (need to revise)
 
 Keep short function declarations on one line including the opening brace:
 
@@ -496,7 +490,7 @@ func updateConstraints() -> () {
 typealias CompletionHandler = (result) -> ()
 ```
 
-## Function Calls
+## Function Calls (need to revise)
 
 Mirror the style of function declarations at call sites. Calls that fit on a single line should be written as such:
 
@@ -1061,65 +1055,6 @@ Do not use emoji in your projects. For those readers who actually type in their 
 ## No #imageLiteral or #colorLiteral
 
 Likewise, do not use Xcode's ability to drag a color or an image into a source statement. These turn into #colorLiteral and #imageLiteral, respectively, and present unpleasant challenges for a reader trying to enter them based on tutorial text. Instead, use `UIColor(red:green:blue)` and `UIImage(imageLiteralResourceName:)`.
-
-## Organization and Bundle Identifier
-
-Where an Xcode project is involved, the organization should be set to `Ray Wenderlich` and the Bundle Identifier set to `com.raywenderlich.TutorialName` where `TutorialName` is the name of the tutorial project.
-
-![Xcode Project settings](screens/project_settings.png)
-
-## Copyright Statement
-
-The following copyright statement should be included at the top of every source
-file:
-
-```swift
-/// Copyright (c) 2020 Razeware LLC
-/// 
-/// Permission is hereby granted, free of charge, to any person obtaining a copy
-/// of this software and associated documentation files (the "Software"), to deal
-/// in the Software without restriction, including without limitation the rights
-/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-/// copies of the Software, and to permit persons to whom the Software is
-/// furnished to do so, subject to the following conditions:
-/// 
-/// The above copyright notice and this permission notice shall be included in
-/// all copies or substantial portions of the Software.
-/// 
-/// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
-/// distribute, sublicense, create a derivative work, and/or sell copies of the
-/// Software in any work that is designed, intended, or marketed for pedagogical or
-/// instructional purposes related to programming, coding, application development,
-/// or information technology.  Permission for such use, copying, modification,
-/// merger, publication, distribution, sublicensing, creation of derivative works,
-/// or sale is expressly withheld.
-/// 
-/// This project and source code may use libraries or frameworks that are
-/// released under various Open-Source licenses. Use of those libraries and
-/// frameworks are governed by their own individual licenses.
-///
-/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-/// THE SOFTWARE.
-```
-
-## Smiley Face
-
-Smiley faces are a very prominent style feature of the [raywenderlich.com](https://www.raywenderlich.com/) site! It is very important to have the correct smile signifying the immense amount of happiness and excitement for the coding topic. The closing square bracket `]` is used because it represents the largest smile able to be captured using ASCII art. A closing parenthesis `)` creates a half-hearted smile, and thus is not preferred.
-
-**Preferred**:
-```
-:]
-```
-
-**Not Preferred**:
-```
-:)
-```
 
 ## References
 
