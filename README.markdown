@@ -29,6 +29,7 @@ Our overarching goals are clarity, consistency and brevity, in that order.
 * [Function Declarations](#function-declarations)
 * [Function Calls](#function-calls)
 * [Closure Expressions](#closure-expressions)
+* [Implicit return](#implicit-return)
 * [Types](#types)
   * [Constants](#constants)
   * [Static Methods and Variable Type Properties](#static-methods-and-variable-type-properties)
@@ -576,6 +577,40 @@ let value = numbers
   .map {$0 * 2}
   .filter {$0 > 50}
   .map {$0 + 10}
+```
+
+## Implicit `return`
+
+Use implicit `return` whenever possible.
+
+**Preferred**:
+```swift
+attendeeList.sort { a, b in
+  a > b
+}
+
+var diameter: Double {
+  radius * 2
+}
+
+func usersCount() -> Int {
+  5
+}
+```
+
+**Not preferred**:
+```swift
+attendeeList.sort { a, b in
+  return a > b
+}
+
+var diameter: Double {
+  return radius * 2
+}
+
+func usersCount() -> Int {
+  return 5
+}
 ```
 
 ## Types
