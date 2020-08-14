@@ -1049,6 +1049,43 @@ if let number1 = number1 {
 
 Guard statements are required to exit in some way. Generally, this should be simple one line statement such as `return`, `throw`, `break`, `continue`, and `fatalError()`. Large code blocks should be avoided. If cleanup code is required for multiple exit points, consider using a `defer` block to avoid cleanup code duplication.
 
+## Defensive programming
+
+Use `assertionFailure` or `assert`, when a certain condition must be always true, and the only case when it is false is a developer's mistake. So that the app will crash in debug builds, but won't crash in release. 
+
+Prefer `assertionFailure` over `assert(false)`.
+
+**Preferred**:
+```swift
+class DetailView: UIView {
+    var viewModel: ViewModel?
+
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+
+        guard let viewModel = viewModel else {
+            assertionFailure("No view model assigned to DetailView")
+            return
+        }
+
+        titleLabel.text = viewModel.title
+    }
+}
+```
+
+**Not preferred**:
+```swift
+class DetailView: UIView {
+    var viewModel: ViewModel?
+
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        
+        titleLabel.text = viewModel?.title
+    }
+}
+```
+
 ## Semicolons
 
 Swift does not require a semicolon after each statement in your code. They are only required if you wish to combine multiple statements on a single line.
