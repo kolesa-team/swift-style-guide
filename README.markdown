@@ -838,6 +838,86 @@ class TimeMachine {
 
 ## Control Flow
 
+### `forEach` vs `for-in`
+
+There are two important differences between the `forEach` HOF and the `for-in` loop.
+1. break/continue only work in a for .. in
+2. return in forEach will exit the closure, but will not halt the iteration.
+
+Generally prefer the `for-in` style of `for` loop over the `forEach` HOF. Thus you don't need to keep in mind closure semantics of iteration code, you get a greater degree of control over an iteration (continue, break) and you can use where-based pattern matching.
+
+**Preferred**:
+```swift
+
+for advert in adverts {
+  print(advert.title)
+}
+
+```
+**Not preferred**:
+```swift
+
+adverts.forEach {
+  print($0.title)
+}
+
+```
+
+Use the `forEach` HOF, when it gives you simpler-looking code. For example,
+* When a collection of objects is optional
+
+**Preferred**:
+```swift
+
+view.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+
+```
+**Not preferred**:
+```swift
+
+if let sublayers = view.layer.sublayers {
+  for layer in sublayers {
+    layer.removeFromSuperlayer()
+  }
+}
+
+```
+* When using Swift’s first class functions capabilities makes your code more elegant
+
+**Preferred**:
+```swift
+  override func viewDidLoad() {
+    ...
+    articles.forEach(addArticleView)
+  }
+  
+  private func addArticleView(for article: Article) {
+    let articleView = ArticleView()
+    ...
+    view.addSubview(articleView)
+  }
+```
+**Not preferred**:
+```swift
+  override func viewDidLoad() {
+    ...
+    for article in articles {
+      addArticleView(for: article)
+    }
+  }
+  
+  private func addArticleView(for article: Article) {
+    let articleView = ArticleView()
+    ...
+    view.addSubview(articleView)
+  }
+```
+* etc
+
+So when there is no difference in readability, prefer the `for-in` loop over the `forEach` HOF.
+
+### `for-in` vs `while-condition-increment`
+
 Prefer the `for-in` style of `for` loop over the `while-condition-increment` style.
 
 **Preferred**:
