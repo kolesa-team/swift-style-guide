@@ -41,6 +41,8 @@ Our overarching goals are clarity, consistency and brevity, in that order.
   * [Extending Lifetime](#extending-lifetime)
 * [Access Control](#access-control)
 * [Control Flow](#control-flow)
+  * [forEach vs for-in](#foreach-vs-for-in)
+  * [for-in vs while-condition-increment](#for-in-vs-while-condition-increment)
   * [Ternary Operator](#ternary-operator)
 * [Golden Path](#golden-path)
   * [Failing Guards](#failing-guards)
