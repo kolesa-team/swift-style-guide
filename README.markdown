@@ -446,7 +446,7 @@ final class Box<T> {
 }
 ```
 
-## Function Declarations (need to revise)
+## Function Declarations
 
 Keep short function declarations on one line including the opening brace:
 
@@ -456,12 +456,23 @@ func reticulateSplines(spline: [Double]) -> Bool {
 }
 ```
 
-For functions with long signatures, put each parameter on a new line and add an extra indent on subsequent lines:
+For functions with long signatures, put each parameter but first one on a new line and align it with the first parameter.
+
+```swift
+func reticulateSplines(spline: [Double], 
+                       adjustmentFactor: Double,
+                       translateConstant: Int, 
+                       comment: String) -> Bool {
+  // reticulate code goes here
+}
+```
+
+For functions with signatures that long, that you exceed a maximum line length, put each parameter on a new line and add an extra indent on subsequent lines:
 
 ```swift
 func reticulateSplines(
   spline: [Double], 
-  adjustmentFactor: Double,
+  tooLongArgumentNameButYouArentAbleToShortenItInAnyWayEvenYouReallyWantTo: Double,
   translateConstant: Int, 
   comment: String
 ) -> Bool {
@@ -491,7 +502,7 @@ func updateConstraints() -> () {
 typealias CompletionHandler = (result) -> ()
 ```
 
-## Function Calls (need to revise)
+## Function Calls
 
 Mirror the style of function declarations at call sites. Calls that fit on a single line should be written as such:
 
@@ -499,12 +510,21 @@ Mirror the style of function declarations at call sites. Calls that fit on a sin
 let success = reticulateSplines(splines)
 ```
 
-If the call site must be wrapped, put each parameter on a new line, indented one additional level:
+If the call site must be wrapped, put each parameter but first one on a new line and align it with the first parameter:
+
+```swift
+let success = reticulateSplines(spline: splines,
+                                adjustmentFactor: 1.3,
+                                translateConstant: 2,
+                                comment: "normalize the display")
+```
+
+For functions with signatures that long, that you exceed a maximum line length, put each parameter on a new line and add an extra indent on subsequent lines:
 
 ```swift
 let success = reticulateSplines(
   spline: splines,
-  adjustmentFactor: 1.3,
+  tooLongArgumentNameButYouArentAbleToShortenItInAnyWayEvenYouReallyWantTo: 1.3,
   translateConstant: 2,
   comment: "normalize the display")
 ```
