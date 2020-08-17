@@ -89,7 +89,7 @@ Descriptive and consistent naming makes software easier to read and understand. 
 - taking advantage of default parameters
 
 ### Protocols
-- protocols that describe _what something is_ should read as nouns. **Example:** `ParameterValuesAbstractyFactory`, `PackageViewDelegate`
+- protocols that describe _what something is_ should read as nouns. **Example:** `ParameterValuesAbstractFactory`, `PackageViewDelegate`
 - protocols that describe _a capability_ should end in _-able_ or _-ible_, or _-ing_ **Example:** `Cancellable`, `SearchAnalyticsSending`
 - you should add the _-Protocol_ suffix if it is expected that there will be only one entity implementing protocol. This is usually a case when you make a protocol to be able to mock an object for testing purposes **Example:** `AdvertServiceProtocol`, `ScheduleProtocol` 
 
