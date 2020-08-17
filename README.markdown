@@ -473,7 +473,7 @@ For functions with signatures that long, that you exceed a maximum line length, 
 ```swift
 func reticulateSplines(
   spline: [Double], 
-  tooLongArgumentNameButYouArentAbleToShortenItInAnyWayEvenYouReallyWantTo: Double,
+  tooLongArgumentNameButYouArentAbleToShortenItInAnyWayEvenIfYouReallyWantTo: Double,
   translateConstant: Int, 
   comment: String
 ) -> Bool {
@@ -1031,7 +1031,7 @@ result = isHorizontal ? x : y
 result = a > b ? x = c > d ? c : d : y
 ```
 
-If the ternary operator statement is too long, then `? <first option>` goes to the second line and `: <second option>` goes to the third line with one tab indentation.
+If the ternary operator statement is too long, then `? <first option>` goes to the second line and `: <second option>` goes to the third line with an extra indent.
 
 **Preferred**:
 ```swift
