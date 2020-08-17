@@ -1018,7 +1018,6 @@ while i < attendeeList.count {
 The Ternary operator, `?:` , should only be used when it increases clarity or code neatness. A single condition is usually all that should be evaluated. Evaluating multiple conditions is usually more understandable as an `if` statement or refactored into instance variables. In general, the best use of the ternary operator is during assignment of a variable and deciding which value to use.
 
 **Preferred**:
-
 ```swift
 let value = 5
 result = value != 0 ? x : y
@@ -1028,10 +1027,26 @@ result = isHorizontal ? x : y
 ```
 
 **Not Preferred**:
-
 ```swift
 result = a > b ? x = c > d ? c : d : y
 ```
+
+If the ternary operator statement is too long, then `? <first option>` goes to the second line and `: <second option>` goes to the third line with one tab indentation.
+
+**Preferred**:
+```swift
+result = boolWithTooLongNameWhichYouCantShortenAtAll 
+    ? firstVariableWithTooLongNameWhichYouCantShortenAtAll 
+    : secondVariableWithTooLongNameWhichYouCantShortenAtAll
+```
+
+**Not Preferred**:
+```swift
+result = boolWithTooLongNameWhichYouCantShortenAtAll ?
+    firstVariableWithTooLongNameWhichYouCantShortenAtAll :
+    secondVariableWithTooLongNameWhichYouCantShortenAtAll
+```
+
 
 ## Golden Path
 
