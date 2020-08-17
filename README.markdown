@@ -76,8 +76,6 @@ Descriptive and consistent naming makes software easier to read and understand. 
   - verb methods follow the -ed, -ing rule for the non-mutating version
   - noun methods follow the formX rule for the mutating version
   - boolean types should read like assertions
-  - protocols that describe _what something is_ should read as nouns
-  - protocols that describe _a capability_ should end in _-able_ or _-ible_
 - using terms that don't surprise experts or confuse beginners
 - generally avoiding abbreviations
 - using precedent for names
@@ -89,6 +87,11 @@ Descriptive and consistent naming makes software easier to read and understand. 
 - preferring to name the first parameter instead of including its name in the method name, except as mentioned under Delegates
 - labeling closure and tuple parameters
 - taking advantage of default parameters
+
+### Protocols
+- protocols that describe _what something is_ should read as nouns. **Example:** `ParameterValuesAbstractyFactory`, `PackageViewDelegate`
+- protocols that describe _a capability_ should end in _-able_ or _-ible_, or _-ing_ **Example:** `Cancellable`, `SearchAnalyticsSending`
+- you should add the _-Protocol_ suffix if it is expected that there will be only one entity implementing protocol. This is usually a case when you make a protocol to be able to mock an object for testing purposes **Example:** `AdvertServiceProtocol`, `ScheduleProtocol` 
 
 ### Prose
 
