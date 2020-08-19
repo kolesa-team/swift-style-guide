@@ -514,16 +514,7 @@ Mirror the style of function declarations at call sites. Calls that fit on a sin
 let success = reticulateSplines(splines)
 ```
 
-If the call site must be wrapped, put each parameter but first one on a new line and align it with the first parameter:
-
-```swift
-let success = reticulateSplines(spline: splines,
-                                adjustmentFactor: 1.3,
-                                translateConstant: 2,
-                                comment: "normalize the display")
-```
-
-For functions with signatures that long, that you exceed a maximum line length, put each parameter on a new line and add an extra indent on subsequent lines:
+If the call site must be wrapped, each argument is written on its own line, indented from the original line:
 
 ```swift
 let success = reticulateSplines(
@@ -531,6 +522,17 @@ let success = reticulateSplines(
   tooLongArgumentNameButYouArentAbleToShortenItInAnyWayEvenYouReallyWantTo: 1.3,
   translateConstant: 2,
   comment: "normalize the display")
+```
+
+The last closing parenthesis may appear either on the same line as the final argument or on its own line.
+
+```swift
+let success = reticulateSplines(
+  spline: splines,
+  tooLongArgumentNameButYouArentAbleToShortenItInAnyWayEvenYouReallyWantTo: 1.3,
+  translateConstant: 2,
+  comment: "normalize the display"
+)
 ```
 
 ## Closure Expressions
