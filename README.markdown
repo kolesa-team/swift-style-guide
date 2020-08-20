@@ -26,6 +26,7 @@ Our overarching goals are clarity, consistency and brevity, in that order.
   * [Protocol Conformance](#protocol-conformance)
   * [Computed Properties](#computed-properties)
   * [Final](#final)
+* [Explicit initialization](#explicit-initialization)
 * [Function Declarations](#function-declarations)
 * [Function Calls](#function-calls)
 * [Closure Expressions](#closure-expressions)
