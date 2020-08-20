@@ -450,6 +450,24 @@ final class Box<T> {
 }
 ```
 
+## Explicit initialization
+
+Avoid using short syntax `.init` when type of a variable is inferred. Use structure/class full name to initialize a variable.
+
+**Preferred**:
+```swift
+let size: CGSize
+// ...
+size = CGSize(width: 100, height: 100)
+```
+
+**Not Preferred**:
+```swift
+let size: CGSize
+// ...
+size = .init(width: 100, height: 100)
+```
+
 ## Function Declarations
 
 Keep short function declarations on one line including the opening brace:
