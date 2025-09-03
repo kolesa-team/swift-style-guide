@@ -1,4 +1,433 @@
-# The Official raywenderlich.com Swift Style Guide.
+## Описание
+Код стайл общий для всех проектов, основанный на Код-стайл от Kodeco.
+
+В данной документации описаны правила, которые согласованы для наших проектов, не описанные пункты смотреть в код-стайл от Kodeco ниже. 
+## Table of Contents
+* [Naming](#naming)
+* [Function Declarations](#naming)
+* [Function Calls](#function-calls)
+* [Closure Expressions](#closure-expressions)
+* [Property wrappers](#property-wrappers)
+* [Constants](#constants)
+* [Optionals](#optionals)
+* [Conditions](#conditions)
+* [Spacing](#spacing)
+* [Code Organization](#code-organization)
+* [Regular comments](#regular-comments)
+* [The Official raywenderlich Swift Style Guide](#the-official-raywenderlich-swift-style-guide)
+
+## Naming
+Названия для instance класса, с названием delegate, указываем в таком же формате. Так как swiftlint выдаст ошибку, что delegate обязаны быть weak, можно сделать точечный disable например: 
+```swift
+// swiftlint:disable weak_delegate
+private let textViewDelegate: UITextViewDelegate = UITextViewForceURLHandlingDelegate()
+// swiftlint:enable weak_delegate
+```
+
+## Function Declarations
+Короткие функций следует размещать на одной строке, включая открывающую фигурную скобку:
+
+```swift
+// RIGHT
+func someMethod(data: [Double]) -> Bool {
+    // do something
+}
+
+// WRONG
+func someMethod(data: [Double]) -> Bool 
+{
+    // do something
+}
+```
+Для функций с длинными сигнатурами (строка не больше 120 символов) помещайте каждый параметр на новую строку и добавляйте дополнительный отступ в последующих строках:
+```swift
+// RIGHT
+func someLongMethod(
+    longDataParameter: [Double], 
+    longArgumentParameter1: Int, 
+    longArgumentParameter2: String
+) -> Bool {
+    // do something
+}
+
+// WRONG
+func someLongMethod(longDataParameter: [Double], 
+                    longArgumentParameter1: Int, 
+                    longArgumentParameter2: String) -> Bool {
+    // do something
+}
+
+// WRONG
+func someLongMethod(longDataParameter: [Double], longArgumentParameter1: Int, 
+                    longArgumentParameter2: String) -> Bool {
+    // do something
+}
+
+// WRONG
+func someLongMethod(longDataParameter: [Double], 
+                    longArgumentParameter1: Int, 
+                    longArgumentParameter2: String
+                   ) -> Bool {
+    // do something
+}
+```
+
+## Function Calls
+
+Повторите стиль объявлений функций в местах вызовов. Вызовы, помещающиеся на одной строке, следует записывать следующим образом:
+
+```swift
+let success = someMethod(data)
+```
+
+Пример для вызова когда длиннее 1 строки:
+
+```swift
+// RIGHT
+let success = someLongMethod(
+    longDataParameter: data,
+    longArgumentParameter1: 1.3,
+    longArgumentParameter2: "test"
+)
+
+// WRONG
+let success = someLongMethod(longDataParameter: data,
+                             longArgumentParameter1: 1.3,
+                             longArgumentParameter2: "test")
+```
+При вызове методов, связанных цепочкой, если не помещается в одну строку (120 символов), переносим методы на следующюю строку с одним tab
+```swift
+// RIGHT
+SearchSubscriptionFunnelEvent.buttonView(eventScreen: Constants.eventScreen).send()
+
+// RIGHT
+SearchSubscriptionFunnelEvent
+    .buttonView(
+        eventScreen: Constants.eventScreen,
+        source: Constants.source,
+        searchObject: searchObject
+    )
+    .send()
+
+
+// WRONG
+SearchSubscriptionFunnelEvent.buttonView(eventScreen: Constants.eventScreen,
+                                         source: Constants.source,
+                                         searchObject: searchObject)
+.send()
+
+// WRONG
+SearchSubscriptionFunnelEvent
+    .buttonView(
+        eventScreen: Constants.eventScreen,
+        source: Constants.source,
+        searchObject: searchObject
+    )
+.send()
+```
+## Closure Expressions
+Использование trailing closure syntax оставляем на усмотрение автора, рекомендуется если есть только один параметр выражения замыкания. Присваивайте параметрам замыкания понятные имена:
+```swift
+// RIGHT
+ToastModel(
+    title: "Error",
+    toastAction: {
+        // ...
+    },
+    buttonAction: {
+      // ...
+    }
+)
+
+// WRONG
+ToastModel(
+    title: "Error",
+    toastAction: {
+        // ...
+    }) {
+        // buttonAction
+    }
+)
+```
+
+## Property wrappers
+Пишем в одну строку
+```swift
+// RIGHT
+@objc class Test {
+    @Observable state: State
+
+    @discardableResult func foo() -> Bool {
+        // ...
+    }
+
+    @MainActor public func foo() { 
+        // ...
+    }
+}
+
+// WRONG
+@objc
+class Test {
+    @Observable 
+    state: State
+
+    @discardableResult 
+    func foo() -> Bool {
+        // ...
+    }
+
+    @MainActor 
+    public func foo() { 
+        // ...
+    }
+}
+```
+
+## Constants
+Нет требования выносить очевидные переменные в константы, выносим в случаях magicNumbers
+
+```swift
+// RIGHT
+class SomeView {
+    enum Constants {
+        static let limit: Int = 20
+        static let deletionToastDuration: Double = 5
+    }
+}
+```
+Нет смысла выносить в константы отступы, которые мы указываем в constraints: 
+```swift
+// RIGHT
+iconView.snp.makeConstraints { make in
+    make.leading.equalTo(16)
+    make.trailing.equalTo(-16)
+    make.bottom.equalTo(-16)
+    make.top.equalTo(16)
+}
+
+// WRONG
+iconView.snp.makeConstraints { make in
+    make.leading.equalTo(Constants.left)
+    make.trailing.equalTo(Constants.right)
+    make.bottom.equalTo(Constants.bottom)
+    make.top.equalTo(Constants.top)
+}
+```
+
+## Optionals
+Не разрешается использовать force unwrap, исключение Assembly файлы. Для старых классов и для IBOutlets, где встречается использование force unwrap выключаем swiftlint для конкретных строк: 
+```swift
+class CabinetBookingButtonView: UIView {
+
+    // swiftlint:disable force_unwrapping
+    var model: CabinetBookingButtonModel!
+    
+    @IBOutlet private var imageView: UIImageView!
+    // swiftlint:enable force_unwrapping
+
+}
+```
+Не разрешается использовать force cast/force try. Для старых классов, где встречается использование force cast выключаем swiftlint для конкретных строк. На усмотрение автора и по необходимости прописывать в условиях ошибки сигнал ошибки (nonFatal события, assertFailure для debug сборок или отображение тостов).
+```swift
+// swiftlint:disable force_cast
+let initialVc = OnboardingViewController.instantiateViewController as! OnboardingViewController
+// swiftlint:enable force_cast
+```
+
+## Conditions
+Для повышения читаемости следует отделять control flow блоки пустыми строками снизу. По желанию можно отделять пустой строкой сверху.
+```swift
+// Код функции
+if (condition) {
+    ...
+}
+```
+Фигурные скобки на той же строке, что условие:
+```swift
+// RIGHT
+ 
+// пример с guard
+guard let foo = someFoo() else { return }
+ 
+// пример с if
+if user.isHappy {
+    // Do something
+} else {
+    // Do something else
+}
+ 
+ 
+// WRONG
+if user.isHappy
+{
+    // Do something
+}
+else {
+    // Do something else
+}
+```
+Если условия не помещаются в одну строку, делаем перенос, также else пишем с новой строки:
+```swift
+// пример с guard
+guard let foo = someFoo(),
+    let bar = array.first(where: { $0.type == .barType }),
+    let bar2 = array.first(where: { $0.type == .barType })
+else {
+    foo()
+ 
+    return
+}
+ 
+// пример с if
+if let foo = someFoo(),
+    let bar = array.first(where: { $0.type == .barType }),
+    let bar2 = array.first(where: { $0.type == .barType }) {
+} else {
+    someFoo()
+}
+```
+При использовании тернарных условных операторов с большими строками следует делать выравнивание по "?" и ":", при этом каждая новая строка должна быть смещена на 1 tab.
+Настроить formatter в xCode, на данный момент если xCode уберет отступы если применить автоформат по всему файлу, не считается критичным и на усмотрение автора.
+```swift
+condition 
+    ? action1()
+    : action2()
+```
+
+## Spacing
+Между switch case пустые строки не оставляем
+```swift
+// RIGHT
+func handle(_ action: SpaceshipAction) {
+    switch action {
+    case .engageWarpDrive:
+        navigationComputer.destination = targetedDestination
+    case .enableArtificialGravity:
+        artificialGravityEngine.enable(strength: .oneG)
+    case .scanPlanet(let planet):
+        scanner.scanAtmosphere()
+    case .handleIncomingEnergyBlast:
+        scanner.scanForArtificialLife()
+    default:
+        break
+  }
+}
+
+// WRONG
+func handle(_ action: SpaceshipAction) {
+    switch action {
+    case .engageWarpDrive:
+        navigationComputer.destination = targetedDestination
+    case .enableArtificialGravity:
+        artificialGravityEngine.enable(strength: .oneG)
+    case .scanPlanet(let planet):
+        scanner.scanAtmosphere()
+    case .handleIncomingEnergyBlast:
+        scanner.scanForArtificialLife()
+    default:
+        break
+    }
+}
+```
+
+Если в блоке switch case более 5 строк, лучше вынести в метод:
+```swift
+func handle(_ action: SpaceshipAction) {
+    switch action {
+    case .engageWarpDrive:
+        navigationComputer.destination = targetedDestination
+        warpDrive.spinUp()
+        warpDrive.activate()
+    case .enableArtificialGravity:
+        artificialGravityEngine.enable(strength: .oneG)
+    case .scanPlanet(let planet):
+        scanPlanet(planet)
+    case .handleIncomingEnergyBlast:
+        energyShields.engage()
+    default:
+        break
+    }
+}
+
+private func scanPlanet(_ planet: Planet) {
+    scanner.target = planet
+    scanner.scanAtmosphere()
+    scanner.scanBiosphere()
+    scanner.scanForArtificialLife()
+    scanner.updateValues()
+    scanner.stop()
+}
+``` 
+Перед return statement следует оставлять пустую строку, исключение: если return является единственным statement в блоке. 
+
+```swift
+if let serviceParameters {
+    parameters["service_data"] = serviceParameters
+}
+
+return .parameters(parameters)
+
+// если return является единственным statement в блоке. 
+if let data {
+    return data
+} else {
+    return nil
+}
+
+```
+Если условия не помещаются в одну строку, делаем перенос, также else пишем с новой строки:
+```swift
+guard let foo = someFoo(),
+    let bar = array.first(where: { $0.type == .barType }),
+    let bar2 = array.first(where: { $0.type == .barType })
+else {
+    foo()
+    
+    return
+}
+
+if let foo = someFoo(),
+   let bar = array.first(where: { $0.type == .barType }),
+   let bar2 = array.first(where: { $0.type == .barType }) {
+} else {
+    someFoo()
+}
+```
+
+## Code Organization
+Рекомендуется оставлять // MARK: в классах, отделяя lifeCycle, методы, реализации делегатов т.д.  
+
+```swift
+// MARK: 
+final class AViewController {
+  //...
+}
+```
+Необходимость оставлять пустую строку после MARK на усмотрение автора:
+```swift
+// MARK: 
+
+final class AViewController {
+  //... 
+}
+```
+
+## Regular comments
+TODO пишем всегда указывая номер задачи
+```swift
+// RIGHT
+// TODO: KRIA-7000 Сделать с этим что-нибудь
+
+// WRONG
+// TO-DO: KRIA-7000 Сделать с этим что-нибудь другое
+// TO DO: KRIA-7000 Сделать с этим что-нибудь новое
+// TODO: - KRIA-7000 ("-" добавит лишнюю линию в Xcode)
+
+```
+
+
+# The Official raywenderlich Swift Style Guide.
 ### Updated for Swift 5
 
 This style guide is different from others you may see, because the focus is centered on readability for print and the web. We created this style guide to keep the code in our books, tutorials, and starter kits nice and consistent — even though we have many different authors working on the books.
