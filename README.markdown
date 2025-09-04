@@ -319,12 +319,16 @@ func handle(_ action: SpaceshipAction) {
     switch action {
     case .engageWarpDrive:
         navigationComputer.destination = targetedDestination
+
     case .enableArtificialGravity:
         artificialGravityEngine.enable(strength: .oneG)
+
     case .scanPlanet(let planet):
         scanner.scanAtmosphere()
+
     case .handleIncomingEnergyBlast:
         scanner.scanForArtificialLife()
+
     default:
         break
     }
